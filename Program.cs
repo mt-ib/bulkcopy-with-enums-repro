@@ -36,6 +36,11 @@ public class AppDbContext : DbContext
             .Build();
         optionsBuilder.UseNpgsql(dataSource, options => options.MapEnum<FooStatus>());
     }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.HasPostgresEnum<FooStatus>();
+    }
 }
 
 public record Foo(
