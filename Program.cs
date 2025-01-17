@@ -32,6 +32,13 @@ public class AppDbContext : DbContext
 
         optionsBuilder.UseNpgsql(connectionString);
     }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Foo>()
+            .Property(x => x.Status)
+            .HasConversion<string>();
+    }
 }
 
 public record Foo(
