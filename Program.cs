@@ -1,6 +1,7 @@
 ﻿using LinqToDB.Data;
 using LinqToDB.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 await using var ctx = new AppDbContext();
 await ctx.Database.EnsureDeletedAsync();
@@ -21,6 +22,7 @@ await ctx.BulkCopyAsync(
 );
 
 
+
 public class AppDbContext : DbContext
 {
     public DbSet<Foo> Foos { get; init; }
@@ -37,7 +39,7 @@ public class AppDbContext : DbContext
     {
         modelBuilder.Entity<Foo>()
             .Property(x => x.Status)
-            .HasConversion<string>();
+            .HasConversion(new EnumToStringConverter<FooStatus>());
     }
 }
 
