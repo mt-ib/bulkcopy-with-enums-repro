@@ -30,7 +30,7 @@ public class AppDbContext : DbContext
         const string connectionString =
             "Host=localhost;Port=5432;Database=linq2db;Username=postgres;Password=example;Include Error Detail=true";
 
-        optionsBuilder.UseNpgsql(connectionString);
+        optionsBuilder.UseNpgsql(connectionString, options => options.MapEnum<FooStatus>("foo_status"));
     }
 }
 
