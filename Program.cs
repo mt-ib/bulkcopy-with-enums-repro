@@ -1,6 +1,7 @@
 ﻿using LinqToDB.Data;
 using LinqToDB.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 await using var ctx = new AppDbContext();
 await ctx.Database.EnsureDeletedAsync();
@@ -30,7 +31,10 @@ public class AppDbContext : DbContext
         const string connectionString =
             "Host=localhost;Port=5432;Database=linq2db;Username=postgres;Password=example;Include Error Detail=true";
 
-        optionsBuilder.UseNpgsql(connectionString, options => options.MapEnum<FooStatus>("foo_status"));
+        var dataSource = new NpgsqlDataSourceBuilder(connectionString)
+            .MapEnum<FooStatus>()
+            .Build();
+        optionsBuilder.UseNpgsql(dataSource, options => options.MapEnum<FooStatus>());
     }
 }
 
