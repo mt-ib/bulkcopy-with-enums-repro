@@ -11,6 +11,7 @@ var entities = new List<Foo>
 {
     new(0, "EF", FooStatus.Open),
     new(0, "EF", FooStatus.Closed),
+    new(0, "EF", null),
 };
 
 ctx.Foos.AddRange(entities);
@@ -46,7 +47,7 @@ public class AppDbContext : DbContext
 public record Foo(
     int Id,
     string Source,
-    FooStatus Status
+    FooStatus? Status
 );
 
 
