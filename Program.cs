@@ -40,7 +40,10 @@ public class AppDbContext : DbContext
     {
         modelBuilder.Entity<Foo>()
             .Property(x => x.Status)
-            .HasConversion(new EnumToStringConverter<FooStatus>());
+            .HasConversion<string>(
+                x => x.ToString()!,
+                x => Enum.Parse<FooStatus>(x)
+            );
     }
 }
 
